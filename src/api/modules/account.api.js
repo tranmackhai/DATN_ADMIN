@@ -1,25 +1,13 @@
 import publicClient from "../client/public.client.js";
 
 const accountEndpoints = {
-  login: "auth/login",
+  getAll: "account/getAll",
+  getById: "account/getById",
+  updateUser: "account/updateUser",
   register: "auth/register",
-  // getInfo: "user/info",
-  // passwordUpdate: "user/update-password",
 };
 
 const accountApi = {
-  login: async ({ gmail, password }) => {
-    try {
-      const response = await publicClient.post(accountEndpoints.login, {
-        gmail,
-        password,
-      });
-      // console.log(response);
-      return { response };
-    } catch (err) {
-      return { err };
-    }
-  },
   register: async ({ name, password, gmail, phone, role }) => {
     try {
       const response = await publicClient.post(accountEndpoints.register, {
@@ -35,26 +23,38 @@ const accountApi = {
       return { err };
     }
   },
-  // getInfo: async ({}) => {
-  //   try {
-  //     const response = await privateClient.get(accountEndpoints.getInfo);
-  //     return { response };
-  //   } catch (err) {
-  //     return { err };
-  //   }
-  // },
-  // passwordUpdate: async ({ password, newPassword, confirmNewPassword }) => {
-  //   try {
-  //     const response = await privateClient.put(accountEndpoints.register, {
-  //       password,
-  //       newPassword,
-  //       confirmNewPassword,
-  //     });
-  //     return { response };
-  //   } catch (err) {
-  //     return { err };
-  //   }
-  // },
+  getAll: async (params) => {
+    try {
+      const response = await publicClient.get(accountEndpoints.getAll, {
+        params: params,
+      });
+      return response;
+    } catch (err) {
+      return err;
+    }
+  },
+  getById: async (id) => {
+    try {
+      const response = await publicClient.get(
+        `${accountEndpoints.getById}/${id}`
+      );
+      return response;
+    } catch (err) {
+      return err;
+    }
+  },
+
+  updateUser: async (id, body) => {
+    try {
+      const response = await publicClient.patch(
+        `${accountEndpoints.updateUser}/${id}`, 
+          body
+      );
+      return response;
+    } catch (err) {
+      return err;
+    }
+  },
 };
 
 export default accountApi;

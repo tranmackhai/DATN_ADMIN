@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Title from "../components/common/Title";
+import Title from "../../components/common/Title";
 import {
   Link,
   useNavigate,
@@ -19,7 +19,8 @@ import {
 import Paper from "@mui/material/Paper";
 import DeleteIcon from "@mui/icons-material/Delete";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
-import newsApi from "../api/modules/news.api";
+import newsApi from "../../api/modules/news.api";
+import moment from "moment";
 
 const Recruitment = () => {
   const [data, setData] = useState({ rows: [], count: 0 });
@@ -78,7 +79,7 @@ const Recruitment = () => {
                     />
                   </TableCell>
                   <TableCell align="center" width="266px">
-                    {item.createdAt}
+                    {moment(item.createdAt).format("MM/DD/YYYY")}
                   </TableCell>
                   <TableCell align="center" width="166px">
                     {item.isActive ? (

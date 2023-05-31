@@ -5,9 +5,9 @@ const baseURL = "http://127.0.0.1:3050/api/";
 
 const privateClient = axios.create({
   baseURL,
-  paramsSerializer: {
-    encode: (params) => queryString.stringify(params),
-  },
+  // paramsSerializer: {
+  //   encode: (params) => queryString.stringify(params),
+  // },
 });
 
 privateClient.interceptors.request.use(async (config) => {
@@ -20,14 +20,14 @@ privateClient.interceptors.request.use(async (config) => {
   };
 });
 
-privateClient.interceptors.response.use(
-  (response) => {
-    if (response && response.data) return response.data;
-    return response;
-  },
-  (err) => {
-    throw err.response.data;
-  }
-);
+// privateClient.interceptors.response.use(
+//   (response) => {
+//     if (response && response.data) return response.data;
+//     return response;
+//   },
+//   (err) => {
+//     throw err.response.data;
+//   }
+// );
 
 export default privateClient;

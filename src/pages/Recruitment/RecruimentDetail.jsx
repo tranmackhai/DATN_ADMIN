@@ -3,8 +3,9 @@ import { Box, Container, Grid, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import newsApi from "../api/modules/news.api";
-import Title from "../components/common/Title";
+import newsApi from "../../api/modules/news.api";
+import Title from "../../components/common/Title";
+import moment from "moment";
 
 const RecruitmentDetail = () => {
   const theme = useTheme();
@@ -68,7 +69,7 @@ const RecruitmentDetail = () => {
                 <Typography variant="h5" fontWeight={500} marginBottom="24px">
                   {news.title}
                 </Typography>
-                <span>{news.createdAt}</span>
+                <span>{moment(news.createdAt).format("MM/DD/YYYY")}</span>
                 <Box textAlign="center">
                   <img src={news.thumbnail} />
                 </Box>
