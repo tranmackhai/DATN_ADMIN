@@ -1,5 +1,6 @@
 import axios from "axios";
-import queryString from "query-string";
+import jwtDecode from "jwt-decode";
+import accountApi from "../modules/account.api";
 
 const baseURL = "http://127.0.0.1:3050/api/";
 
@@ -11,11 +12,17 @@ const privateClient = axios.create({
 });
 
 privateClient.interceptors.request.use(async (config) => {
+  let accessToken = localStorage.getItem("actkn");
+  const decode = jwtDecode(accessToken);
+  if (decode.exp * 1000 < new Date().getTime()) {
+    const response = await accountApi.refreshToken();
+    accessToken = response.response.data;
+  }
   return {
     ...config,
     headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("actkn")}`,
+      // "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
     },
   };
 });

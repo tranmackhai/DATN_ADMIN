@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import Paper from "@mui/material/Paper";
 import moment from "moment";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
@@ -17,6 +18,7 @@ import {
 } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { setCurrentUser } from "../../redux/features/accountSlice";
+import Search from "../../components/common/Search";
 
 const UserPage = () => {
   const [data, setData] = useState({ rows: [], count: 0 });
@@ -42,6 +44,7 @@ const UserPage = () => {
   return (
     <section className="userpage">
       <Title title="Tài khoản" button="Thêm">
+        <Search />
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
@@ -50,7 +53,12 @@ const UserPage = () => {
                 <TableCell align="center">Số điện thoại</TableCell>
                 <TableCell align="center">Gmail</TableCell>
                 <TableCell align="center">Giới tính</TableCell>
-                <TableCell align="center">Loại tài khoản</TableCell>
+                <TableCell align="center">
+                  Loại tài khoản{" "}
+                  <IconButton sx={{ padding: "0" }}>
+                    <FilterAltIcon />
+                  </IconButton>
+                </TableCell>
                 <TableCell align="center">Ngày tạo</TableCell>
                 <TableCell align="center"></TableCell>
               </TableRow>

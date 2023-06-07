@@ -1,6 +1,6 @@
+import React, { useEffect, useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
-import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import {
   IconButton,
   Pagination,
@@ -13,37 +13,28 @@ import {
 } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import moment from "moment";
-import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import newsApi from "../../api/modules/news.api";
 import ConfirmDialog from "../../components/common/ConfirmDialog";
-import Search from "../../components/common/Search";
 import Title from "../../components/common/Title";
+import Search from "../../components/common/Search";
 
-const Recruitment = () => {
+const ScientificResearch = () => {
   const [data, setData] = useState({ rows: [], count: 0 });
   const navigate = useNavigate();
   const [query] = useSearchParams();
   const p = query.get("p") || 1;
   const q = query.get("q") || "";
-  const sortBy = query.get("sortBy") || "id";
-  const sortType = query.get("sortType") || "DESC";
   const [open, setOpen] = useState(false);
-
   const [current, setCurrent] = useState();
-  // const [filter, setFilter] = useState({});
 
   const handlePageChange = (page) => {
-    navigate(`?p=${page}&q=${q}&sortBy=${sortBy}&sortType=${sortType}`);
+    navigate(`?p=${page}`);
   };
 
-  const handleFilter = async () => {
-    // setFilter(!filter);
-    navigate(
-      `?p=${p}&q=${q}&sortBy=isActive&sortType=${
-        sortType === "DESC" ? "ASC" : "DESC"
-      }`
-    );
+  const handleSearch = (keyword) => {
+    // console.log(keyword);
+    navigate(`?p=${p}&q=${keyword}`);
   };
 
   const handleConfirm = async () => {
@@ -53,11 +44,9 @@ const Recruitment = () => {
         console.log(response);
         if (response.status === 200) {
           const res = await newsApi.getAll({
-            type: "recruitment",
+            type: "scientificResearch",
             limit: 5,
             p: p,
-            sortBy: sortBy,
-            sortType: sortType,
           });
           setData(res.data);
         }
@@ -65,12 +54,7 @@ const Recruitment = () => {
     }
   };
 
-  const handleSearch = async (keyword) => {
-    // console.log(keyword);
-    navigate(`?p=${p}&q=${keyword}&sortBy=${sortBy}&sortType=${sortType}`);
-  };
-
-  const deleteNews = async (item) => {
+  const deleteNews = (item) => {
     setCurrent(item);
     setOpen(true);
   };
@@ -78,11 +62,9 @@ const Recruitment = () => {
   useEffect(() => {
     const fetchData = async () => {
       const params = {
-        type: "recruitment",
+        type: "scientificResearch",
         limit: 5,
         p: p,
-        sortBy: sortBy,
-        sortType: sortType,
       };
       try {
         if (q === "") {
@@ -96,11 +78,11 @@ const Recruitment = () => {
       } catch (error) {}
     };
     fetchData();
-  }, [p, q, sortBy, sortType]);
+  }, [p, q]);
 
   return (
-    <section className="recruitment">
-      <Title title="Tuyển dụng">
+    <section className="scientific-research">
+      <Title title="Nghiên cứu khoa học">
         <Search onSearch={handleSearch} />
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -109,12 +91,6 @@ const Recruitment = () => {
                 <TableCell>Tiêu đề</TableCell>
                 <TableCell align="center">Ảnh</TableCell>
                 <TableCell align="center">Ngày đăng bài</TableCell>
-                <TableCell align="center">
-                  Trạng thái
-                  <IconButton sx={{ padding: "0" }} onClick={handleFilter}>
-                    <FilterAltIcon />
-                  </IconButton>
-                </TableCell>
                 <TableCell></TableCell>
               </TableRow>
             </TableHead>
@@ -141,18 +117,11 @@ const Recruitment = () => {
                   <TableCell align="center" width="266px">
                     {moment(item.createdAt).format("DD/MM/YYYY")}
                   </TableCell>
-                  <TableCell align="center" width="166px">
-                    {item.isActive ? (
-                      <span style={{ color: "#5cb85c" }}>Đã duyệt</span>
-                    ) : (
-                      <span style={{ color: "#ffbb33" }}>Đang xét duyệt</span>
-                    )}
-                  </TableCell>
                   <TableCell align="center" width="120px">
                     <>
                       <IconButton
                         LinkComponent={Link}
-                        to={`/recruitment/${item.slug}`}
+                        to={`/scientific-research/${item.slug}`}
                       >
                         <RemoveRedEyeIcon />
                       </IconButton>
@@ -191,4 +160,4 @@ const Recruitment = () => {
   );
 };
 
-export default Recruitment;
+export default ScientificResearch;

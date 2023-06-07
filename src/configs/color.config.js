@@ -7,7 +7,7 @@ const themeConfigs = createTheme({
       contrastText: "rgb(102 105 102 / 90%)",
       highlightText: "rgb(94, 53, 177)",
       background: "rgb(237, 231, 246)",
-      text: "#fff"
+      text: "#fff",
     },
     secondary: {
       main: "#428bca",

@@ -1,12 +1,12 @@
+import React, { useEffect, useState } from "react";
 import { useTheme } from "@emotion/react";
 import { Box, Container, Grid, Typography } from "@mui/material";
 import moment from "moment";
-import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import newsApi from "../../api/modules/news.api";
 import Title from "../../components/common/Title";
 
-const RecruitmentDetail = () => {
+const ScientificResearchDetail = () => {
   const theme = useTheme();
   const { slug } = useParams();
   const [news, setNews] = useState();
@@ -28,7 +28,7 @@ const RecruitmentDetail = () => {
     const fetchData = async () => {
       try {
         const response = await newsApi.getAll({
-          type: "recruitment",
+          type: "scientificResearch",
           slug: slug,
         });
         setNews(response.data.rows[0]);
@@ -36,10 +36,9 @@ const RecruitmentDetail = () => {
     };
     fetchData();
   }, [slug]);
-  if (!news) return <></>;
 
   return (
-    <section className="recruitment-detail">
+    <section className="scientific-research_detail">
       <Title title="Chi tiết bài đăng">
         <Container disableGutters={true} maxWidth="lg">
           <Grid
@@ -68,7 +67,7 @@ const RecruitmentDetail = () => {
                 <Typography variant="h5" fontWeight={500} marginBottom="24px">
                   {news?.title}
                 </Typography>
-                <span>{moment(news?.createdAt).format("MM/DD/YYYY")}</span>
+                <span>{moment(news?.createdAt).format("DD/MM/YYYY")}</span>
                 <Box textAlign="center">
                   <img src={news?.thumbnail} />
                 </Box>
@@ -125,4 +124,4 @@ const RecruitmentDetail = () => {
   );
 };
 
-export default RecruitmentDetail;
+export default ScientificResearchDetail;

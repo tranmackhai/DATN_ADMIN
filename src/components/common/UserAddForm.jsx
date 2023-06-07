@@ -53,7 +53,6 @@ const UserAddForm = () => {
       name: currentUser ? currentUser.name : "",
       gmail: currentUser ? currentUser.gmail : "",
       phone: currentUser ? currentUser.phone : "",
-      sex: currentUser ? currentUser.sex : true,
       password: "",
       role: currentUser ? currentUser.role : "",
     },
@@ -77,7 +76,6 @@ const UserAddForm = () => {
       password: Yup.string()
         .min(8, "Mật khẩu tối thiểu 8 ký tự ")
         .required("Bạn phải nhập mật khẩu"),
-      sex: Yup.string().required("Chọn giới tính"),
       role: Yup.string().required("Chọn kiểu thành viên"),
     }),
     enableReinitialize: true,
@@ -100,8 +98,8 @@ const UserAddForm = () => {
       }
     },
   });
-
-  // console.log(userForm.values);
+  
+  console.log(userForm.errors);
 
   useEffect(() => {
     if (id) {
