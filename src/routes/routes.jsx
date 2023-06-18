@@ -1,20 +1,22 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import AuthAdmin from "../components/common/AuthAdmin";
 import DefaultLayout from "../components/layouts/DefaultLayout";
-import HomePage from "../pages/HomePage";
-import Posts from "../pages/Forum/Post/Posts";
-import Topic from "../pages/Forum/Topic/Topic";
 import Comment from "../pages/Comment";
-import UserPage from "../pages/User/UserPage";
-import Recruitment from "../pages/Recruitment/Recruitment";
-import RecruitmentDetail from "../pages/Recruitment/RecruimentDetail";
-import UserDetail from "../pages/User/UserDetail";
+import Category from "../pages/Forum/Category/Category";
+import FormAddCategory from "../pages/Forum/Category/FormAddCategory";
+import Posts from "../pages/Forum/Posts/Posts";
+import HomePage from "../pages/HomePage";
+import Login from "../pages/Login/Login";
 import News from "../pages/News/News";
 import NewsDetail from "../pages/News/NewsDetail";
+import RecruitmentDetail from "../pages/Recruitment/RecruimentDetail";
+import Recruitment from "../pages/Recruitment/Recruitment";
 import ScientificResearch from "../pages/ScientificResearch/ScientificResearch";
 import ScientificResearchDetail from "../pages/ScientificResearch/ScientificResearchDetail";
-import Login from "../pages/Login/Login";
-import AuthAdmin from "../components/common/AuthAdmin";
+import UserDetail from "../pages/User/UserDetail";
+import UserPage from "../pages/User/UserPage";
+import FormAddPosts from "../pages/Forum/Posts/FormAddPosts";
 
 export default function Router() {
   return (
@@ -72,6 +74,16 @@ export default function Router() {
           }
         />
         <Route
+          path="/posts/add"
+          element={
+            <AuthAdmin>
+              <DefaultLayout>
+                <FormAddPosts />
+              </DefaultLayout>
+            </AuthAdmin>
+          }
+        />
+        <Route
           path="/comments"
           element={
             <AuthAdmin>
@@ -82,11 +94,21 @@ export default function Router() {
           }
         />
         <Route
-          path="/topic"
+          path="/category"
           element={
             <AuthAdmin>
               <DefaultLayout>
-                <Topic />
+                <Category />
+              </DefaultLayout>
+            </AuthAdmin>
+          }
+        />
+        <Route
+          path="/category/add"
+          element={
+            <AuthAdmin>
+              <DefaultLayout>
+                <FormAddCategory />
               </DefaultLayout>
             </AuthAdmin>
           }

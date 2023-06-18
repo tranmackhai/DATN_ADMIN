@@ -14,6 +14,7 @@ const UserDetail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const handleBack = () => {
     navigate(-1);
   };
@@ -27,7 +28,7 @@ const UserDetail = () => {
       };
       fetchData();
     }
-  }, [id]);
+  }, [id, currentUser, dispatch]);
 
   return (
     <section className="user-detail">

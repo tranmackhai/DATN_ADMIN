@@ -5,13 +5,14 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { setCurrentUser } from "../../redux/features/accountSlice";
 
-const Title = ({ title, children, button }) => {
+const Title = ({ title, children, path, path2, button, button2 }) => {
   const theme = useTheme();
   const dispatch = useDispatch();
 
   const handleSetCurrentUser = () => {
     dispatch(setCurrentUser(null));
   };
+  // console.log(path);
   return (
     <Box
       sx={{
@@ -22,13 +23,13 @@ const Title = ({ title, children, button }) => {
     >
       <Box
         sx={{
-          backgroundColor: theme.palette.primary.main,
+          backgroundColor: theme.palette.primary.backgroundMain,
           borderRadius: "6px",
           display: "flex",
           justifyContent: "space-between",
           borderBottom: "1px solid rgb(54, 65, 82)",
           alignItems: "center",
-          padding: "1rem"
+          padding: "1rem",
         }}
       >
         <Typography
@@ -39,30 +40,32 @@ const Title = ({ title, children, button }) => {
         >
           {title}
         </Typography>
-        {button && (
-          <Button
-            onClick={handleSetCurrentUser}
-            component={Link}
-            to="/account/add"
-            sx={{
-              marginTop: 1,
-              fontWeight: "600",
-              color: "rgb(94, 53, 177)",
-              backgroundColor: "rgb(237, 231, 246)",
-              height: "3rem",
-              marginRight: "12px",
-              "&:hover": {
+        <Box>
+          {button && (
+            <Button
+              onClick={handleSetCurrentUser}
+              component={Link}
+              to={`${path}/add`}
+              sx={{
+                marginTop: 1,
+                fontWeight: "600",
+                color: "rgb(94, 53, 177)",
                 backgroundColor: "rgb(237, 231, 246)",
-              },
-            }}
-          >
-            Thêm tài khoản
-          </Button>
-        )}
+                height: "3rem",
+                marginRight: "12px",
+                "&:hover": {
+                  backgroundColor: "rgb(237, 231, 246)",
+                },
+              }}
+            >
+              {button}
+            </Button>
+          )}
+        </Box>
       </Box>
       <Box
         sx={{
-          backgroundColor: theme.palette.primary.main,
+          backgroundColor: theme.palette.primary.backgroundMain,
         }}
       >
         {children}

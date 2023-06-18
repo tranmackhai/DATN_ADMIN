@@ -29,6 +29,7 @@ const UserPage = () => {
   const handlePageChange = (page) => {
     navigate(`?p=${page}`);
   };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -41,9 +42,10 @@ const UserPage = () => {
     };
     fetchData();
   }, [p]);
+
   return (
     <section className="userpage">
-      <Title title="Tài khoản" button="Thêm">
+      <Title title="Tài khoản" button="Thêm tài khoản" path="/account">
         <Search />
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">

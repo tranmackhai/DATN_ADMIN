@@ -1,5 +1,4 @@
-import DeleteIcon from "@mui/icons-material/Delete";
-import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import React, { useEffect, useState } from "react";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import {
   IconButton,
@@ -13,9 +12,10 @@ import {
 } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import moment from "moment";
-import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import newsApi from "../../api/modules/news.api";
+import DeleteIcon from "@mui/icons-material/Delete";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import ConfirmDialog from "../../components/common/ConfirmDialog";
 import Search from "../../components/common/Search";
 import Title from "../../components/common/Title";

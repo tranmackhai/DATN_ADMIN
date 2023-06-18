@@ -70,7 +70,7 @@ const Header = () => {
               sx={{
                 backgroundColor: theme.palette.primary.highlightText,
                 fontWeight: "700",
-                color: theme.palette.primary.main,
+                color: theme.palette.primary.backgroundMain,
                 "&:hover": {
                   backgroundColor: "rgb(94, 53, 177, 0.9)",
                 },
