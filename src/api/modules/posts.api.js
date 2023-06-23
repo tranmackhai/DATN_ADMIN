@@ -21,7 +21,7 @@ const postsApi = {
 
   getAll: async (params) => {
     try {
-      const response = await publicClient.get(postsEndpoints.getAll, {
+      const response = await privateClient.get(postsEndpoints.getAll, {
         params: params,
       });
       return response;
@@ -32,7 +32,7 @@ const postsApi = {
 
   update: async (slug) => {
     try {
-      const response = await publicClient.patch(
+      const response = await privateClient.patch(
         `${postsEndpoints.update}/${slug}`
       );
       return response;

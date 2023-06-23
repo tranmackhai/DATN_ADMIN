@@ -1,9 +1,8 @@
-import { useTheme } from "@emotion/react";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { LoadingButton } from "@mui/lab";
 import {
   Box,
+  Button,
   FormControl,
   IconButton,
   InputAdornment,
@@ -18,7 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import * as Yup from "yup";
 import accountApi from "../../api/modules/account.api";
-import { setAccount, setCurrentUser } from "../../redux/features/accountSlice";
+import { setCurrentUser } from "../../redux/features/accountSlice";
 
 const roles = [
   {
@@ -36,7 +35,6 @@ const roles = [
 ];
 
 const UserAddForm = () => {
-  const [isRegisterRequest, setisRegisterRequest] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -89,16 +87,15 @@ const UserAddForm = () => {
           role: values.role,
         };
         const respone = await accountApi.register(formData);
-        if (respone.response.status === 201) {
+        if (respone.status === 201) {
           navigate("/account");
-          dispatch(setAccount(respone.response.data));
         }
       } catch (error) {
         console.log(error);
       }
     },
   });
-  
+
   console.log(userForm.errors);
 
   useEffect(() => {
@@ -237,20 +234,19 @@ const UserAddForm = () => {
             {userForm.touched.role && userForm.errors.role}
           </p>
         </Box>
-        <LoadingButton
+        <Button
           type="submit"
           fullWidth
           size="large"
           color="success"
           variant="contained"
-          loading={isRegisterRequest}
           sx={{
             marginTop: 4,
             fontWeight: "700",
           }}
         >
           Thêm
-        </LoadingButton>
+        </Button>
       </Stack>
     </Box>
   );

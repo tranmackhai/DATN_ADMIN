@@ -3,6 +3,7 @@ import privateClient from "../client/private.client.js";
 
 const accountEndpoints = {
   login: "auth/loginAdmin",
+  register: "auth/register",
   logout: "auth/logout",
   getAll: "account/getAll",
   getById: "account/getById",
@@ -14,6 +15,21 @@ const accountEndpoints = {
 };
 
 const accountApi = {
+  register: async ({ name, password, gmail, phone, role }) => {
+    try {
+      const response = await publicClient.post(accountEndpoints.register, {
+        gmail,
+        password,
+        name,
+        phone,
+        role,
+      });
+      return response;
+    } catch (err) {
+      return { err };
+    }
+  },
+
   login: async ({ gmail, password }) => {
     const response = await publicClient.post(accountEndpoints.login, {
       gmail,

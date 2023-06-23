@@ -1,5 +1,3 @@
-import React, { useEffect, useState } from "react";
-import Title from "../../../components/common/Title";
 import { useTheme } from "@emotion/react";
 import {
   Box,
@@ -13,12 +11,13 @@ import {
   Typography,
 } from "@mui/material";
 import { useFormik } from "formik";
-import "react-toastify/dist/ReactToastify.css";
+import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
-import { useSelector } from "react-redux";
+import "react-toastify/dist/ReactToastify.css";
 import * as Yup from "yup";
-import { configSlugify } from "../../../utils/index.util";
 import categoryApi from "../../../api/modules/category.api";
+import Title from "../../../components/common/Title";
+import { configSlugify } from "../../../utils/index.util";
 
 const FormAddCategory = () => {
   const theme = useTheme();
