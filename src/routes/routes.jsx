@@ -17,6 +17,7 @@ import ScientificResearchDetail from "../pages/ScientificResearch/ScientificRese
 import UserDetail from "../pages/User/UserDetail";
 import UserPage from "../pages/User/UserPage";
 import FormAddPosts from "../pages/Forum/Posts/FormAddPosts";
+import FormUpdateCategory from "../pages/Forum/Category/FormUpdateCategory";
 
 export default function Router() {
   return (
@@ -109,6 +110,16 @@ export default function Router() {
             <AuthAdmin>
               <DefaultLayout>
                 <FormAddCategory />
+              </DefaultLayout>
+            </AuthAdmin>
+          }
+        />
+        <Route
+          path="/topic/:slug"
+          element={
+            <AuthAdmin>
+              <DefaultLayout>
+                <FormUpdateCategory />
               </DefaultLayout>
             </AuthAdmin>
           }

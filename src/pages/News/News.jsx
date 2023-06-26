@@ -79,6 +79,7 @@ const News = () => {
     };
     fetchData();
   }, [p, q]);
+
   return (
     <section className="news">
       <Title title="Tin tức">

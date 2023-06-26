@@ -52,7 +52,7 @@ const postsApi = {
 
   search: async (params) => {
     try {
-      const response = await publicClient.get(postsEndpoints.search, {
+      const response = await privateClient.get(postsEndpoints.search, {
         params: params,
       });
       return response;

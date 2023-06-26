@@ -22,31 +22,66 @@ import Search from "../../components/common/Search";
 
 const UserPage = () => {
   const [data, setData] = useState({ rows: [], count: 0 });
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [query] = useSearchParams();
   const p = query.get("p") || 1;
+  const q = query.get("q") || "";
+  const role = query.get("role") || "";
+  const sortBy = query.get("sortBy") || "id";
+  const sortType = query.get("sortType") || "DESC";
+
+  const handleSearch = (keyword) => {
+    navigate(`?p=${p}&q=${keyword}`);
+  };
+
   const handlePageChange = (page) => {
-    navigate(`?p=${page}`);
+    navigate(`?p=${page}&q=${q}&sortBy=${sortBy}&sortType=${sortType}`);
+  };
+
+  const handleFilter = async () => {
+    let filterRole = "";
+    if (role === "student") {
+      filterRole = "recruitment";
+    } else if (role === "recruitment") {
+      filterRole = "teacher";
+    } else {
+      filterRole = "student";
+    }
+    navigate(
+      `?p=${p}&q=${q}&sortBy=${sortBy}&sortType=${
+        sortType === "DESC" ? "ASC" : "DESC"
+      }&role=${filterRole}`
+    );
   };
 
   useEffect(() => {
     const fetchData = async () => {
+      const params = {
+        limit: 5,
+        p: p,
+        sortBy: sortBy,
+        sortType: sortType,
+        role: role,
+      };
       try {
-        const response = await accountApi.getAll({
-          limit: 5,
-          p: p,
+        const response = await accountApi.search({
+          ...params,
+          q: q,
         });
         setData(response.data);
+        // console.log(response.data);
       } catch (error) {}
     };
     fetchData();
-  }, [p]);
+  }, [p, q, , sortBy, sortType, role]);
+  // console.log(q);
 
   return (
     <section className="userpage">
       <Title title="Tài khoản" button="Thêm tài khoản" path="/account">
-        <Search />
+        <Search onSearch={handleSearch} />
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
@@ -57,7 +92,7 @@ const UserPage = () => {
                 <TableCell align="center">Giới tính</TableCell>
                 <TableCell align="center">
                   Loại tài khoản{" "}
-                  <IconButton sx={{ padding: "0" }}>
+                  <IconButton sx={{ padding: "0" }} onClick={handleFilter}>
                     <FilterAltIcon />
                   </IconButton>
                 </TableCell>

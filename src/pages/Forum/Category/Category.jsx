@@ -4,43 +4,80 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import {
   IconButton,
+  Pagination,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  Typography,
 } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import moment from "moment";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import categoryApi from "../../../api/modules/category.api";
 import Title from "../../../components/common/Title";
+import ConfirmDialog from "../../../components/common/ConfirmDialog";
 
 const Category = () => {
-  const theme = useTheme();
   const [categorys, setCategorys] = useState([]);
+  const [query] = useSearchParams();
+
+  const p = query.get("p") || 1;
+  const q = query.get("q") || "";
+  const sortBy = query.get("sortBy") || "id";
+  const sortType = query.get("sortType") || "DESC";
   const [open, setOpen] = useState(false);
   const [current, setCurrent] = useState();
+  const navigate = useNavigate();
 
-  const deleteNews = async (item) => {
+  const deleteCategorys = async (item) => {
     setCurrent(item);
     setOpen(true);
   };
 
+  const handleConfirm = async () => {
+    if (current) {
+      try {
+        const response = await categoryApi.delete(current.id);
+        console.log(response);
+        if (response.status === 200) {
+          const res = await categoryApi.getAll({
+            limit: 5,
+            p: p,
+            sortBy: sortBy,
+            sortType: sortType,
+          });
+          setCategorys(res.data);
+        }
+      } catch (error) {}
+    }
+  };
+
+  const handlePageChange = (page) => {
+    // console.log(page);
+    navigate(`?p=${page}&q=${q}&sortBy=${sortBy}&sortType=${sortType}`);
+  };
+
   useEffect(() => {
     const fetchData = async () => {
+      const params = {
+        limit: 5,
+        p: p,
+        sortBy: sortBy,
+        sortType: sortType,
+        hidePosts: true,
+      };
       try {
-        const response = await categoryApi.getAll({ sortType: "ASC" });
-        setCategorys(response.data.rows);
+        const response = await categoryApi.getAll(params);
+        setCategorys(response.data);
       } catch (error) {}
     };
     fetchData();
-  }, []);
+  }, [p, q, sortBy, sortType]);
 
-  // console.log(categorys);
+  console.log(categorys);
   return (
     <section className="category">
       <Title
@@ -60,8 +97,10 @@ const Category = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {categorys?.map((data, index) => {
-                console.log(data);
+              {categorys?.rows?.map((data, index) => {
+                {
+                  /* console.log(data); */
+                }
                 return (
                   <Fragment key={index}>
                     <TableRow>
@@ -91,7 +130,7 @@ const Category = () => {
                           >
                             <RemoveRedEyeIcon />
                           </IconButton>
-                          <IconButton onClick={() => deleteNews(data)}>
+                          <IconButton onClick={() => deleteCategorys(data)}>
                             <DeleteIcon />
                           </IconButton>
                         </>
@@ -103,6 +142,27 @@ const Category = () => {
             </TableBody>
           </Table>
         </TableContainer>
+        {open && (
+          <ConfirmDialog
+            onClose={() => setOpen(false)}
+            onConfirm={() => handleConfirm()}
+            open={open}
+          />
+        )}
+
+        {categorys?.count > 0 && (
+          <Pagination
+            count={Math.ceil(categorys?.count / 5)}
+            shape="rounded"
+            onChange={(e, page) => {
+              handlePageChange(page);
+            }}
+            sx={{
+              marginTop: "24px",
+              ul: { justifyContent: "center" },
+            }}
+          />
+        )}
       </Title>
     </section>
   );

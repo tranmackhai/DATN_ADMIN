@@ -54,7 +54,7 @@ const categoryApi = {
 
   search: async (params) => {
     try {
-      const response = await publicClient.get(categoryEndpoints.search, {
+      const response = await privateClient.get(categoryEndpoints.search, {
         params: params,
       });
       return response;
@@ -109,12 +109,5 @@ export const category = [
     icon: "fa-brands fa-usps",
     path: "/posts",
     title: "Bài viết",
-  },
-
-  {
-    id: "7",
-    icon: "fa-regular fa-comments",
-    path: "/comments",
-    title: "Bình luận",
   },
 ];

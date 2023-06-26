@@ -23,6 +23,7 @@ const ScientificResearch = () => {
   const [data, setData] = useState({ rows: [], count: 0 });
   const navigate = useNavigate();
   const [query] = useSearchParams();
+
   const p = query.get("p") || 1;
   const q = query.get("q") || "";
   const [open, setOpen] = useState(false);

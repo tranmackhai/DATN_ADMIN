@@ -7,6 +7,7 @@ const accountEndpoints = {
   logout: "auth/logout",
   getAll: "account/getAll",
   getById: "account/getById",
+  search: "account/search",
   updateUser: "account/updateUser",
   updatePassword: "auth/changePassword",
   getProfile: "auth/getProfile",
@@ -113,14 +114,16 @@ const accountApi = {
     }
   },
 
-  // getInfo: async ({}) => {
-  //   try {
-  //     const response = await privateClient.get(accountEndpoints.getInfo);
-  //     return { response };
-  //   } catch (err) {
-  //     return { err };
-  //   }
-  // },
+  search: async (params) => {
+    try {
+      const response = await privateClient.get(accountEndpoints.search, {
+        params: params,
+      });
+      return response;
+    } catch (err) {
+      return { err };
+    }
+  },
 
   updatePassword: async (body) => {
     try {
